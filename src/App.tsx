@@ -7,14 +7,18 @@ import {
   Title,
   Dialog,
   Devices,
+  SideBar,
+  Avatar,
+  Cam,
+  WeatherWidget,
+  Members,
 } from "./components";
 
-function App() {
+const App = () => {
   return (
     <AppLayout>
       <Navbar>
-        <Logo src={""} />
-
+        <Logo src={"sss"}>{}</Logo>
         <NavbarItems>
           <div></div>
         </NavbarItems>
@@ -25,13 +29,13 @@ function App() {
         <Devices>These are devices</Devices>
       </Main>
       <SideBar>
-        <Avatar></Avatar>
-        <Cam></Cam>
-        <Members></Members>
-        <WeatherWidget></WeatherWidget>
+        <Avatar>This is the avatar container</Avatar>
+        <Cam>camera</Cam>
+        <Members>Members List</Members>
+        <WeatherWidget>Weather</WeatherWidget>
       </SideBar>
     </AppLayout>
   );
-}
+};
 
 export default App;

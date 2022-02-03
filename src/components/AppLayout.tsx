@@ -1,6 +1,6 @@
 import { Props } from "../types";
 
-const AppLayout = ({ children, ...restProps }: Props) => {
+const AppLayout: React.FC<Props> = ({ children, ...restProps }) => {
   return <div {...restProps}>{children}</div>;
 };
 

@@ -1,7 +1,7 @@
 import { Props } from "../../types";
 
-const Main: React.FC<Props> = ({ children, ...restProps }) => {
+const Avatar: React.FC<Props> = ({ children, ...restProps }) => {
   return <div {...restProps}>{children}</div>;
 };
 
-export default Main;
+export default Avatar;

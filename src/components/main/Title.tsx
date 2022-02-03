@@ -1,6 +1,6 @@
 import { Props } from "../../types";
 
-const Title = ({ children, ...restProps }: Props) => {
+const Title: React.FC<Props> = ({ children, ...restProps }) => {
   return <div {...restProps}>{children}</div>;
 };
 

@@ -1,6 +1,6 @@
 import { Props } from "../../types";
 
-const Dialog = ({ children, ...restProps }: Props) => {
+const Dialog: React.FC<Props> = ({ children, ...restProps }) => {
   return <div {...restProps}>{children}</div>;
 };
 

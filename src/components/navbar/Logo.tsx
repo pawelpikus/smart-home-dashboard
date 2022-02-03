@@ -1,7 +1,11 @@
-import { ILogoProps } from "../../types";
+import { Props } from "../../types";
 
-const Logo = ({ src, ...restProps }: ILogoProps) => {
-  return <div {...restProps}></div>;
+const Logo: React.FC<Props> = ({ src, ...restProps }) => {
+  return (
+    <div>
+      <img {...restProps} src={src} alt="logo" />
+    </div>
+  );
 };
 
 export default Logo;
