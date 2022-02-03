@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  AppLayout,
+  Navbar,
+  Main,
+  Logo,
+  NavbarItems,
+  Title,
+  Dialog,
+  Devices,
+} from "./components";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppLayout>
+      <Navbar>
+        <Logo src={""} />
+
+        <NavbarItems>
+          <div></div>
+        </NavbarItems>
+      </Navbar>
+      <Main>
+        <Title>Good morning, User!</Title>
+        <Dialog>This is dragabble dialog component</Dialog>
+        <Devices>These are devices</Devices>
+      </Main>
+      <SideBar>
+        <Avatar></Avatar>
+        <Cam></Cam>
+        <Members></Members>
+        <WeatherWidget></WeatherWidget>
+      </SideBar>
+    </AppLayout>
   );
 }
 
