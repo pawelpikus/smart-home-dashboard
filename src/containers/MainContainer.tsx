@@ -1,16 +1,13 @@
-import { Devices, Dialog, Main, Title } from "../components";
+import { Main } from "../components";
 import { Props } from "../types";
 
-const MainContainer: React.FC<Props> = ({ children }) => {
+const MainContainer: React.FC<Props> = () => {
   return (
-    <div>
-      <Main>
-        <Title>Title</Title>
-        <Dialog>draggable dialog component</Dialog>
-        <Devices>devices</Devices>
-      </Main>
-      {children}
-    </div>
+    <Main>
+      <Main.Title>Hello, User!</Main.Title>
+      <Main.Dialog />
+      <Main.Devices />
+    </Main>
   );
 };
 
