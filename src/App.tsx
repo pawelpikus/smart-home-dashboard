@@ -1,39 +1,12 @@
-import {
-  AppLayout,
-  Navbar,
-  Main,
-  Logo,
-  NavbarItems,
-  Title,
-  Dialog,
-  Devices,
-  SideBar,
-  Avatar,
-  Cam,
-  WeatherWidget,
-  Members,
-} from "./components";
+import { AppLayout } from "./components";
+import { HeaderContainer, MainContainer, SidebarContainer } from "./containers";
 
 const App = () => {
   return (
     <AppLayout>
-      <Navbar>
-        <Logo src={""} />
-        <NavbarItems>
-          <div>Navbar items</div>
-        </NavbarItems>
-      </Navbar>
-      <Main>
-        <Title>Good morning, User!</Title>
-        <Dialog>This is dragabble dialog component</Dialog>
-        <Devices>These are devices</Devices>
-      </Main>
-      <SideBar>
-        <Avatar>This is the avatar container</Avatar>
-        <Cam>camera</Cam>
-        <Members>Members List</Members>
-        <WeatherWidget>Weather</WeatherWidget>
-      </SideBar>
+      <HeaderContainer />
+      <MainContainer />
+      <SidebarContainer />
     </AppLayout>
   );
 };
