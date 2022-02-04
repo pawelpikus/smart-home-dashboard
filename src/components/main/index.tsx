@@ -1,12 +1,16 @@
 import { Props } from "../../types";
 
 const Main = ({ children, ...restProps }: Props) => {
-  return <div {...restProps}>{children}</div>;
+  return (
+    <div className="min-w-full " {...restProps}>
+      {children}
+    </div>
+  );
 };
 
 Main.Title = function MainTitle({ children, ...restProps }: Props) {
   return (
-    <h1 className="font-bold text-xl my-5" {...restProps}>
+    <h1 className="my-5 text-xl font-bold text-center" {...restProps}>
       {children}
     </h1>
   );
@@ -14,7 +18,10 @@ Main.Title = function MainTitle({ children, ...restProps }: Props) {
 
 Main.Dialog = function MainDialog({ ...restProps }) {
   return (
-    <div className=" min-w-full bg-white rounded border-none p-10 my-4 shadow text-textBlue ">
+    <div
+      {...restProps}
+      className="min-w-full p-10 my-4 text-center transition-colors bg-white border-none shadow-sm rounded-2xl text-textBlue hover:bg-bgHover"
+    >
       Main dialog window
     </div>
   );
@@ -28,11 +35,11 @@ const cards = [
 
 Main.Devices = function MainDevices({ ...restProps }: Props) {
   return (
-    <div className="flex flex-wrap gap-2" {...restProps}>
+    <div className="flex flex-wrap justify-between" {...restProps}>
       {cards.map((card) => (
         <div
           key={card.name}
-          className="bg-white p-8  border-none rounded shadow text-textBlue "
+          className=" mb-4 text-center w-[46%] p-8 cursor-pointer transition-colors bg-white border-none shadow-sm rounded-2xl text-textBlue hover:bg-bgHover"
         >
           <h3>{card.name}</h3>
           <p>{card.status}</p>

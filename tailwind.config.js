@@ -6,6 +6,7 @@ module.exports = {
       black: "#000",
       white: "#fff",
       bgLight: "#ebf2f6",
+      bgHover: "#dff2fd",
       bgDarker: "#84a5b8",
       textLight: "#c1c5cb",
       accent: "#d4573c",
