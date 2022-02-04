@@ -18,9 +18,9 @@ const App = () => {
   return (
     <AppLayout>
       <Navbar>
-        <Logo src={"sss"}>{}</Logo>
+        <Logo src={""} />
         <NavbarItems>
-          <div></div>
+          <div>Navbar items</div>
         </NavbarItems>
       </Navbar>
       <Main>
