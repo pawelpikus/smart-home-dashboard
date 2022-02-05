@@ -5,7 +5,11 @@ const Header = ({ children, ...restProps }: Props) => {
 };
 
 Header.Nav = function HeaderNav({ children, ...restProps }: Props) {
-  return <div {...restProps}>{children}</div>;
+  return (
+    <ul className="flex gap-4" {...restProps}>
+      {children}
+    </ul>
+  );
 };
 
 Header.NavItem = function HeaderNavItem({
@@ -13,13 +17,7 @@ Header.NavItem = function HeaderNavItem({
   data,
   ...restProps
 }: Props) {
-  return (
-    <ul>
-      <li {...restProps}>
-        <a href="#">{children}</a>
-      </li>
-    </ul>
-  );
+  return <li>{children}</li>;
 };
 
 export default Header;
