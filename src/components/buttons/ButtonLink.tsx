@@ -1,11 +1,14 @@
 import React from "react";
 import { Props } from "../../types";
 
-const ButtonLink = ({ children }: Props) => {
+const ButtonLink = ({ children, href }: Props) => {
   return (
-    <button className="w-10 h-10 bg-white border-2 rounded-full shadow border-textBlue ">
+    <a
+      href={href}
+      className="flex items-center justify-center w-12 h-12 transition-colors border-2 rounded-full shadow-lg bg-bgDarker border-textBlue hover:bg-accent hover:border-none"
+    >
       {children}
-    </button>
+    </a>
   );
 };
 

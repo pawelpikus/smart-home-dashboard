@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface Props extends ILogoProps, INavItem {
+export interface Props extends ILogoProps, INavItem, IButtonLink {
   children?: React.ReactNode;
 }
 
@@ -10,4 +10,8 @@ export interface ILogoProps {
 
 export interface INavItem {
   data?: string;
+}
+
+export interface IButtonLink {
+  href?: string;
 }

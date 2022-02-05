@@ -1,9 +1,9 @@
 import { Props } from "../../types";
-import Card from "../Cards";
+import Card from "../Card";
 
 const Main = ({ children, ...restProps }: Props) => {
   return (
-    <div className="min-w-full " {...restProps}>
+    <div className="min-w-full mt-14" {...restProps}>
       {children}
     </div>
   );
@@ -11,7 +11,10 @@ const Main = ({ children, ...restProps }: Props) => {
 
 Main.Title = function MainTitle({ children, ...restProps }: Props) {
   return (
-    <h1 className="my-5 text-xl font-bold text-center" {...restProps}>
+    <h1
+      className="my-5 text-xl font-bold text-center text-black "
+      {...restProps}
+    >
       {children}
     </h1>
   );

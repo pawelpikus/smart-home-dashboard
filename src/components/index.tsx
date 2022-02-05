@@ -6,7 +6,6 @@ export { default as NavbarItems } from "./header";
 export { default as Title } from "./main";
 export { default as Dialog } from "./main";
 export { default as Devices } from "./main";
-export { default as Avatar } from "./sidebar";
 export { default as SideBar } from "./sidebar";
 export { default as Cam } from "./sidebar";
 export { default as WeatherWidget } from "./sidebar";
