@@ -1,8 +1,8 @@
-export { default as Navbar } from "./navbar";
+export { default as Header } from "./header";
 export { default as AppLayout } from "./AppLayout";
-export { default as Logo } from "./navbar";
+export { default as Logo } from "./header";
 export { default as Main } from "./main";
-export { default as NavbarItems } from "./navbar";
+export { default as NavbarItems } from "./header";
 export { default as Title } from "./main";
 export { default as Dialog } from "./main";
 export { default as Devices } from "./main";

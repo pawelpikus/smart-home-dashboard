@@ -1,18 +1,16 @@
 import React from "react";
-import { Logo, Navbar, NavbarItems } from "../components";
+import { Header } from "../components";
 import { Props } from "../types";
 
-const HeaderContainer: React.FC<Props> = ({ children }) => {
+const HeaderContainer = () => {
   return (
-    <div>
-      <Navbar>
-        <Logo src={""} />
-        <NavbarItems>
-          <div>Navbar items</div>
-        </NavbarItems>
-      </Navbar>
-      {children}
-    </div>
+    <Header>
+      <Header.Nav>
+        <Header.NavItem>Link1</Header.NavItem>
+        <Header.NavItem>Link2</Header.NavItem>
+        <Header.NavItem>Link2</Header.NavItem>
+      </Header.Nav>
+    </Header>
   );
 };
 

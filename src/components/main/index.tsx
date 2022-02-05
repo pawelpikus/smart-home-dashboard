@@ -1,4 +1,5 @@
 import { Props } from "../../types";
+import Card from "../Cards";
 
 const Main = ({ children, ...restProps }: Props) => {
   return (
@@ -37,13 +38,10 @@ Main.Devices = function MainDevices({ ...restProps }: Props) {
   return (
     <div className="flex flex-wrap justify-between" {...restProps}>
       {cards.map((card) => (
-        <div
-          key={card.name}
-          className=" mb-4 text-center w-[46%] p-8 cursor-pointer transition-colors bg-white border-none shadow-sm rounded-2xl text-textBlue hover:bg-bgHover"
-        >
-          <h3>{card.name}</h3>
-          <p>{card.status}</p>
-        </div>
+        <Card key={card.name}>
+          <Card.Title>{card.name}</Card.Title>
+          <Card.Status>{card.status}</Card.Status>
+        </Card>
       ))}
     </div>
   );
