@@ -12,11 +12,22 @@ const Main = ({ children, ...restProps }: Props) => {
 Main.Title = function MainTitle({ children, ...restProps }: Props) {
   return (
     <h1
-      className="my-5 text-xl font-bold text-center text-black "
+      className="mt-5 text-2xl font-bold text-center text-black "
       {...restProps}
     >
       {children}
     </h1>
+  );
+};
+
+Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
+  return (
+    <p
+      {...restProps}
+      className="text-sm text-black opacity-70 text-center mb-5 "
+    >
+      {children}
+    </p>
   );
 };
 
@@ -32,9 +43,9 @@ Main.Dialog = function MainDialog({ ...restProps }) {
 };
 
 const cards = [
-  { name: "Bulb", status: "on" },
-  { name: "socket", status: "off" },
-  { name: "TV", status: "on" },
+  { name: "Bulb", status: "connected" },
+  { name: "Outlet", status: "disconnected" },
+  { name: "TempSensor", status: "poor connection" },
 ];
 
 Main.Devices = function MainDevices({ ...restProps }: Props) {
@@ -42,10 +53,14 @@ Main.Devices = function MainDevices({ ...restProps }: Props) {
     <div className="flex flex-wrap justify-between" {...restProps}>
       {cards.map((card) => (
         <Card key={card.name}>
+          <Card.Icon />
           <Card.Title>{card.name}</Card.Title>
           <Card.Status>{card.status}</Card.Status>
         </Card>
       ))}
+      <Card>
+        <Card.AddNew>Add new Device</Card.AddNew>
+      </Card>
     </div>
   );
 };
