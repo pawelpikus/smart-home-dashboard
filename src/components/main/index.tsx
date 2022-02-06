@@ -24,7 +24,7 @@ Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
   return (
     <p
       {...restProps}
-      className="text-sm text-black opacity-70 text-center mb-5 "
+      className="mb-5 text-sm text-center text-black opacity-70 "
     >
       {children}
     </p>
@@ -45,7 +45,7 @@ Main.Dialog = function MainDialog({ ...restProps }) {
 const cards = [
   { name: "Bulb", status: "connected" },
   { name: "Outlet", status: "disconnected" },
-  { name: "TempSensor", status: "poor connection" },
+  { name: "TempSensor", status: "poorConnection" },
 ];
 
 Main.Devices = function MainDevices({ ...restProps }: Props) {
@@ -55,7 +55,7 @@ Main.Devices = function MainDevices({ ...restProps }: Props) {
         <Card key={card.name}>
           <Card.Icon />
           <Card.Title>{card.name}</Card.Title>
-          <Card.Status>{card.status}</Card.Status>
+          <Card.Status status={card.status}>{card.status}</Card.Status>
         </Card>
       ))}
       <Card>

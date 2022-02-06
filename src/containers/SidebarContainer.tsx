@@ -1,14 +1,12 @@
 import React from "react";
-import { Cam, Members, SideBar, WeatherWidget } from "../components";
+import { SideBar } from "../components";
 import { Props } from "../types";
 
 const SidebarContainer: React.FC<Props> = ({ children }) => {
   return (
     <div>
       <SideBar>
-        <Cam>camera</Cam>
-        <Members>Members List</Members>
-        <WeatherWidget>Weather</WeatherWidget>
+        <SideBar.Members>Members</SideBar.Members>
       </SideBar>
       {children}
     </div>

@@ -1,12 +1,5 @@
 export { default as Header } from "./header";
 export { default as AppLayout } from "./AppLayout";
-export { default as Logo } from "./header";
+export { default as Avatar } from "./avatar";
 export { default as Main } from "./main";
-export { default as NavbarItems } from "./header";
-export { default as Title } from "./main";
-export { default as Dialog } from "./main";
-export { default as Devices } from "./main";
 export { default as SideBar } from "./sidebar";
-export { default as Cam } from "./sidebar";
-export { default as WeatherWidget } from "./sidebar";
-export { default as Members } from "./sidebar";

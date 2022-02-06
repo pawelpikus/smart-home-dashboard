@@ -19,11 +19,7 @@ Header.Nav = function HeaderNav({ children, ...restProps }: Props) {
   );
 };
 
-Header.NavItem = function HeaderNavItem({
-  children,
-  data,
-  ...restProps
-}: Props) {
+Header.NavItem = function HeaderNavItem({ children }: Props) {
   return <li>{children}</li>;
 };
 
