@@ -1,6 +1,12 @@
 import React from "react";
 
-export interface Props extends ILogoProps, INavItem, IButtonLink, ICardStatus {
+export interface Props
+  extends ILogoProps,
+    INavItem,
+    IButtonLink,
+    ICardStatus,
+    ICardIcon,
+    ICardOnOff {
   children?: React.ReactNode;
 }
 
@@ -18,4 +24,12 @@ export interface IButtonLink {
 
 export interface ICardStatus {
   status?: string;
+}
+
+export interface ICardIcon {
+  type?: string;
+}
+
+export interface ICardOnOff {
+  onOff?: boolean;
 }

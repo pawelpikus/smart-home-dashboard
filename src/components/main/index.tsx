@@ -43,9 +43,14 @@ Main.Dialog = function MainDialog({ ...restProps }) {
 };
 
 const cards = [
-  { name: "Bulb", status: "connected" },
-  { name: "Outlet", status: "disconnected" },
-  { name: "TempSensor", status: "poorConnection" },
+  { type: "bulb", name: "Bulb", status: "connected", isTurnedOn: true },
+  { type: "outlet", name: "Outlet", status: "disconnected", isTurnedOn: false },
+  {
+    type: "temperatureSensor",
+    name: "TempSensor",
+    status: "poorConnection",
+    isTurnedOn: true,
+  },
 ];
 
 Main.Devices = function MainDevices({ ...restProps }: Props) {
@@ -53,11 +58,14 @@ Main.Devices = function MainDevices({ ...restProps }: Props) {
     <div className="flex flex-wrap justify-between" {...restProps}>
       {cards.map((card) => (
         <Card key={card.name}>
-          <div className="flex items-center justify-between gap-2">
-            <Card.Icon />
-            <Card.Status status={card.status}>{card.status}</Card.Status>
+          <div className="flex items-start justify-between gap-2">
+            <Card.Icon type={card.type} />
+            <Card.Status status={card.status} />
           </div>
-          <Card.Title>{card.name}</Card.Title>
+          <div className="flex items-start justify-between gap-2">
+            <Card.Title>{card.name}</Card.Title>
+            <Card.OnOff onOff={card.isTurnedOn} />
+          </div>
         </Card>
       ))}
       <Card>
