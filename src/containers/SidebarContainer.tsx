@@ -2,16 +2,13 @@ import React from "react";
 import { SideBar } from "../components";
 import { Props } from "../types";
 
-const SidebarContainer: React.FC<Props> = ({ children }) => {
+const SidebarContainer: React.FC<Props> = () => {
   return (
-    <div>
-      <SideBar>
-        <SideBar.Members>Members</SideBar.Members>
-        <SideBar.Cam />
-        <SideBar.Weather />
-      </SideBar>
-      {children}
-    </div>
+    <SideBar>
+      <SideBar.Members>Members</SideBar.Members>
+      <SideBar.Cam />
+      <SideBar.Weather />
+    </SideBar>
   );
 };
 

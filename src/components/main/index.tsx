@@ -3,7 +3,10 @@ import Card from "../Card";
 
 const Main = ({ children, ...restProps }: Props) => {
   return (
-    <div className="min-w-full mt-14" {...restProps}>
+    <div
+      className="min-w-full lg:items-center lg:flex lg:flex-col lg:mx-6 mt-14 lg:col-start-2 lg:col-end-6"
+      {...restProps}
+    >
       {children}
     </div>
   );

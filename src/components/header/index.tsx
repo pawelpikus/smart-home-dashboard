@@ -3,7 +3,7 @@ import { Props } from "../../types";
 const Header = ({ children, ...restProps }: Props) => {
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 p-4 bg-white rounded-lg "
+      className="fixed bottom-0 left-0 right-0 p-4 bg-white rounded-lg lg:relative lg:col-span-1 lg:h-screen"
       {...restProps}
     >
       {children}
@@ -13,7 +13,7 @@ const Header = ({ children, ...restProps }: Props) => {
 
 Header.Nav = function HeaderNav({ children, ...restProps }: Props) {
   return (
-    <ul className="flex justify-center gap-6" {...restProps}>
+    <ul className="flex justify-center w-auto gap-6 lg:flex-col" {...restProps}>
       {children}
     </ul>
   );

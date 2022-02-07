@@ -1,7 +1,14 @@
 import { Props } from "../../types";
 
 const SideBar = ({ children, ...restProps }: Props) => {
-  return <div {...restProps}>{children}</div>;
+  return (
+    <div
+      className="flex flex-col items-center justify-center w-full h-screen bg-bgDarker lg:mx-0 lg:col-start-7 lg:col-span-2"
+      {...restProps}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default SideBar;
