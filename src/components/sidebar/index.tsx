@@ -9,3 +9,11 @@ export default SideBar;
 SideBar.Members = function SideBarMembers({ children }: Props) {
   return <div>{children}</div>;
 };
+
+SideBar.Cam = function SideBarCam() {
+  return <div>Cam</div>;
+};
+
+SideBar.Weather = function SideBarWeather() {
+  return <div>Weather</div>;
+};

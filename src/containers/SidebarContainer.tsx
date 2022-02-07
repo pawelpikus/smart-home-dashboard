@@ -7,6 +7,8 @@ const SidebarContainer: React.FC<Props> = ({ children }) => {
     <div>
       <SideBar>
         <SideBar.Members>Members</SideBar.Members>
+        <SideBar.Cam />
+        <SideBar.Weather />
       </SideBar>
       {children}
     </div>
