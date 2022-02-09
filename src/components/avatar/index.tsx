@@ -6,7 +6,7 @@ const Avatar = ({ children, ...restProps }: Props) => {
   return (
     <div
       {...restProps}
-      className="fixed top-0 left-0 right-0 z-40 flex items-center justify-end gap-1 p-2 text-black bg-bgDark"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-end gap-1 p-2 text-white bg-bgDark"
     >
       {children}
     </div>
