@@ -3,7 +3,7 @@ import { Props } from "../../types";
 const Header = ({ children, ...restProps }: Props) => {
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 justify-center p-4 bg-white rounded-lg lg:flex lg:flex-col lg:rounded-none lg:items-end lg:p-0 lg:relative lg:col-span-1 lg:h-screen"
+      className="fixed bottom-0 left-0 right-0 justify-center p-4 bg-white lg:row-start-2 lg:flex lg:flex-col lg:rounded-none lg:items-end lg:p-0 lg:relative lg:col-span-1 lg:h-screen"
       {...restProps}
     >
       {children}

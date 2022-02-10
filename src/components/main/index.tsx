@@ -4,12 +4,16 @@ import Card from "../Card";
 const Main = ({ children, ...restProps }: Props) => {
   return (
     <div
-      className="min-w-full lg:justify-center lg:flex lg:flex-col mt-14 lg:col-start-2 lg:col-end-7 lg:text-xl lg:h-screen lg:min-w-min lg:mx-4 "
+      className="min-w-full lg:row-start-2 lg:justify-center lg:flex lg:flex-col lg:col-start-2 lg:col-end-7 lg:text-xl lg:h-screen lg:min-w-min lg:mx-4 "
       {...restProps}
     >
       {children}
     </div>
   );
+};
+
+Main.Container = function mainContainer({ children }: Props) {
+  return <div className="w-11/12 py-2 mx-auto ">{children}</div>;
 };
 
 Main.Title = function MainTitle({ children, ...restProps }: Props) {

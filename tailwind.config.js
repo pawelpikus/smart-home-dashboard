@@ -16,7 +16,12 @@ module.exports = {
     fontFamily: {
       sans: ["Nunito", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        // Complex site-specific column configuration
+        "desktop-dashboard": "20% 45% 35%",
+      },
+    },
   },
   plugins: [],
 };

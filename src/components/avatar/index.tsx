@@ -6,8 +6,16 @@ const Avatar = ({ children, ...restProps }: Props) => {
   return (
     <div
       {...restProps}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-end gap-1 p-2 text-white bg-bgDark"
+      className="row-start-1 gap-1 mx-auto text-white bg-bgDark lg:col-span-full"
     >
+      {children}
+    </div>
+  );
+};
+
+Avatar.Container = function avatarContainer({ children }: Props) {
+  return (
+    <div className="flex items-center justify-end w-11/12 py-2 mx-auto ">
       {children}
     </div>
   );
@@ -15,7 +23,7 @@ const Avatar = ({ children, ...restProps }: Props) => {
 
 Avatar.Img = function avatarImg() {
   return (
-    <div className="text-4xl transition-colors cursor-pointer hover:text-accent">
+    <div className="ml-2 text-4xl transition-colors cursor-pointer hover:text-accent">
       <BsFilePerson />
     </div>
   );
