@@ -4,7 +4,7 @@ import Card from "../Card";
 const Main = ({ children, ...restProps }: Props) => {
   return (
     <div
-      className="min-w-full lg:items-center lg:flex lg:flex-col lg:mx-6 mt-14 lg:col-start-2 lg:col-end-6"
+      className="min-w-full lg:justify-center lg:flex lg:flex-col mt-14 lg:col-start-2 lg:col-end-7 lg:text-xl lg:h-screen lg:min-w-min lg:mx-4 "
       {...restProps}
     >
       {children}
@@ -15,7 +15,7 @@ const Main = ({ children, ...restProps }: Props) => {
 Main.Title = function MainTitle({ children, ...restProps }: Props) {
   return (
     <h1
-      className="mt-5 text-2xl font-bold text-center text-black "
+      className="mt-5 text-2xl font-bold text-center text-black lg:text-4xl"
       {...restProps}
     >
       {children}
@@ -27,7 +27,7 @@ Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
   return (
     <p
       {...restProps}
-      className="mb-5 text-sm text-center text-black opacity-70 "
+      className="mb-5 text-sm text-center text-black opacity-70 lg:text-base "
     >
       {children}
     </p>
