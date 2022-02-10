@@ -19,7 +19,7 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         // Complex site-specific column configuration
-        "desktop-dashboard": "20% 45% 35%",
+        "desktop-dashboard": "10% 65% 25%",
       },
     },
   },

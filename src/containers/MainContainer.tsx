@@ -7,8 +7,10 @@ const MainContainer: React.FC<Props> = () => {
       <Main.Container>
         <Main.Title>Hello, Alicia</Main.Title>
         <Main.Subtitle>Have a nice day</Main.Subtitle>
-        <Main.Dialog />
-        <Main.Devices />
+        <Main.Col>
+          <Main.Dialog />
+          <Main.Devices />
+        </Main.Col>
       </Main.Container>
     </Main>
   );
