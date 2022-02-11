@@ -76,7 +76,7 @@ Main.Devices = function MainDevices({ ...restProps }: Props) {
     >
       {cards.map((card) => (
         <Card key={card.name}>
-          <div className="flex items-start justify-between gap-2">
+          <div className="flex items-start justify-between w-full gap-2 ">
             <Card.Icon type={card.type} />
             <Card.Status status={card.status} />
           </div>
