@@ -15,12 +15,22 @@ const Main = ({ children, ...restProps }: Props) => {
 };
 
 Main.Container = function mainContainer({ children }: Props) {
-  return <div className="w-11/12 py-2 mx-auto ">{children}</div>;
+  return <div className="w-11/12 gap-4 py-2 mx-auto">{children}</div>;
+};
+
+Main.DFlex = function mainDFlex({ children }: Props) {
+  return (
+    <div className="flex flex-col justify-between gap-4 lg:flex-row">
+      {children}
+    </div>
+  );
 };
 
 Main.Col = function mainCol({ children }: Props) {
   return (
-    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4 lg:justify-between">
+    <div
+      className="flex flex-col w-full lg:flex-row lg:gap-4 lg:justify-center "
+    >
       {children}
     </div>
   );
@@ -58,18 +68,12 @@ Main.Dialog = function MainDialog({ ...restProps }) {
     endOnly: true,
   });
 
-  // create a snap modifier which changes the event coordinates to the closest
-  // corner of a grid
-  const snap100x100 = interact.modifiers.snap({
-    targets: [interact.snappers.grid({ x: 50, y: 50 })],
-    relativePoints: [{ x: 0, y: 0 }],
-  });
   useLayoutEffect(() => {
     if (draggableRef.current) {
       interact(draggableRef.current).draggable({
         inertia: true,
         // apply the restrict and then the snap modifiers to drag events
-        modifiers: [restrictToParent, snap100x100],
+        modifiers: [restrictToParent],
         listeners: {
           move(event) {
             position.x += event.dx;
@@ -86,7 +90,7 @@ Main.Dialog = function MainDialog({ ...restProps }) {
     <div
       ref={draggableRef}
       {...restProps}
-      className="p-10 my-4 text-center transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full lg:h-full"
+      className="p-10 my-4 text-center transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full "
     >
       Main dialog window
     </div>
