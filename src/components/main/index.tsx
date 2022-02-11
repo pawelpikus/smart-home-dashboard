@@ -1,5 +1,7 @@
+import { useLayoutEffect, useRef } from "react";
 import { Props } from "../../types";
 import Card from "../Card";
+import interact from "interactjs";
 
 const Main = ({ children, ...restProps }: Props) => {
   return (
@@ -47,10 +49,44 @@ Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
 };
 
 Main.Dialog = function MainDialog({ ...restProps }) {
+  const draggableRef = useRef<HTMLDivElement>(null);
+
+  const position = { x: 0, y: 0 };
+  // create a restrict modifier to prevent dragging an element out of its parent
+  const restrictToParent = interact.modifiers.restrictRect({
+    restriction: "parent",
+    endOnly: true,
+  });
+
+  // create a snap modifier which changes the event coordinates to the closest
+  // corner of a grid
+  const snap100x100 = interact.modifiers.snap({
+    targets: [interact.snappers.grid({ x: 50, y: 50 })],
+    relativePoints: [{ x: 0, y: 0 }],
+  });
+  useLayoutEffect(() => {
+    if (draggableRef.current) {
+      interact(draggableRef.current).draggable({
+        inertia: true,
+        // apply the restrict and then the snap modifiers to drag events
+        modifiers: [restrictToParent, snap100x100],
+        listeners: {
+          move(event) {
+            position.x += event.dx;
+            position.y += event.dy;
+
+            event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+          },
+        },
+      });
+    }
+  });
+
   return (
     <div
+      ref={draggableRef}
       {...restProps}
-      className="p-10 my-4 text-center transition-colors bg-white border-none shadow-sm rounded-2xl text-textBlue hover:bg-bgHover lg:w-full lg:h-full "
+      className="p-10 my-4 text-center transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full lg:h-full"
     >
       Main dialog window
     </div>
