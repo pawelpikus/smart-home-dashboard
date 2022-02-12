@@ -6,7 +6,8 @@ export interface Props
     IButtonLink,
     ICardStatus,
     ICardIcon,
-    ICardOnOff {
+    ICardOnOff,
+    IDialogRes {
   children?: React.ReactNode;
 }
 
@@ -32,4 +33,16 @@ export interface ICardIcon {
 
 export interface ICardOnOff {
   onOff?: boolean;
+}
+
+export interface IDialogRes {
+  response?: {
+    type: "bulb";
+    id: string;
+    name: string;
+    connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
+    isTurnedOn: boolean;
+    brightness: number; // <0, 100>
+    color: string;
+  }; // in the CSS formats;
 }

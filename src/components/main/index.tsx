@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from "react";
 import { Props } from "../../types";
 import Card from "../Card";
 import interact from "interactjs";
+import { RiH3 } from "react-icons/ri";
 
 const Main = ({ children, ...restProps }: Props) => {
   return (
@@ -48,7 +49,7 @@ Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
   );
 };
 
-Main.Dialog = function MainDialog({ ...restProps }) {
+Main.Dialog = function MainDialog({ response, ...restProps }: Props) {
   const draggableRef = useRef<HTMLDivElement>(null);
 
   const position = { x: 0, y: 0 };
@@ -76,13 +77,22 @@ Main.Dialog = function MainDialog({ ...restProps }) {
     }
   });
 
+  const smartBulb = response && (
+    <div className="flex flex-col gap-2 ">
+      <h3>{response.name}</h3>
+      <p>Connection state: {response.connectionState}</p>
+      <p>Status: {response.isTurnedOn ? `on` : `off`}</p>
+      <p>Color: {response.color}</p>
+    </div>
+  );
+
   return (
     <div
       ref={draggableRef}
       {...restProps}
-      className="p-10 my-4 text-center transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full "
+      className="p-10 my-4 text-left transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full "
     >
-      Main dialog window
+      {response ? smartBulb : <div>Loading...</div>}
     </div>
   );
 };
