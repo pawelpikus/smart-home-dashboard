@@ -20,17 +20,7 @@ Main.Container = function mainContainer({ children }: Props) {
 
 Main.DFlex = function mainDFlex({ children }: Props) {
   return (
-    <div className="flex flex-col justify-between gap-4 lg:flex-row">
-      {children}
-    </div>
-  );
-};
-
-Main.Col = function mainCol({ children }: Props) {
-  return (
-    <div
-      className="flex flex-col w-full lg:flex-row lg:gap-4 lg:justify-center "
-    >
+    <div className="flex flex-col items-center justify-between gap-4 lg:flex-row ">
       {children}
     </div>
   );
@@ -102,7 +92,7 @@ const cards = [
   { type: "outlet", name: "Outlet", status: "disconnected", isTurnedOn: false },
   {
     type: "temperatureSensor",
-    name: "TempSensor",
+    name: "Temp Sensor",
     status: "poorConnection",
     isTurnedOn: true,
   },
@@ -116,7 +106,7 @@ Main.Devices = function MainDevices({ ...restProps }: Props) {
     >
       {cards.map((card) => (
         <Card key={card.name}>
-          <div className="flex items-start justify-between w-full gap-2 ">
+          <div className="flex items-start justify-between gap-2">
             <Card.Icon type={card.type} />
             <Card.Status status={card.status} />
           </div>

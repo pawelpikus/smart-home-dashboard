@@ -8,12 +8,8 @@ const MainContainer: React.FC<Props> = () => {
         <Main.Title>Hello, Alicia</Main.Title>
         <Main.Subtitle>Have a nice day</Main.Subtitle>
         <Main.DFlex>
-          <Main.Col>
-            <Main.Dialog />
-          </Main.Col>
-          <Main.Col>
-            <Main.Devices />
-          </Main.Col>
+          <Main.Dialog />
+          <Main.Devices />
         </Main.DFlex>
       </Main.Container>
     </Main>
