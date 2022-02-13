@@ -45,6 +45,7 @@ Main.Subtitle = function MainSubTitle({ children }: Props) {
 
 Main.Dialog = function MainDialog({ response, type }: IDialogRes) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const draggableRef = useRef<HTMLDivElement>(null);
 
   const position = { x: 0, y: 0 };
@@ -55,8 +56,11 @@ Main.Dialog = function MainDialog({ response, type }: IDialogRes) {
   });
 
   useEffect(() => {
+    if (response) {
+      setIsLoading(false);
+    }
     setIsOpen(true);
-  }, [type]);
+  }, [type, response]);
 
   useLayoutEffect(() => {
     if (draggableRef.current) {
@@ -93,11 +97,11 @@ Main.Dialog = function MainDialog({ response, type }: IDialogRes) {
       <button
         type="button"
         onClick={() => setIsOpen(false)}
-        className="absolute px-2 py-1 text-white rounded top-4 right-4 bg-bgDarker hover:bg-bgDark"
+        className="absolute px-2 py-1 text-sm text-white rounded top-2 right-2 lg:top-4 lg:right-4 bg-bgDarker hover:bg-bgDark"
       >
         X
       </button>
-      {response ? smartDevice : <Spinner />}
+      {isLoading ? <Spinner /> : smartDevice}
     </div>
   ) : null;
 };

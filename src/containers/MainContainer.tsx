@@ -5,7 +5,7 @@ import { Main } from "../components";
 const ENDPOINT = "http://localhost:4001";
 
 const MainContainer = () => {
-  const [response, setResponse] = useState();
+  const [response, setResponse] = useState(null);
   const [type, setType] = useState("bulb");
   const [error, setError] = useState(false);
 
@@ -34,12 +34,10 @@ const MainContainer = () => {
       <Main.Container>
         <Main.Title>Hello, Alicia</Main.Title>
         <Main.Subtitle>Have a nice day</Main.Subtitle>
-        {response && (
-          <Main.DFlex>
-            <Main.Dialog response={response} error={error} type={type} />
-            <Main.Devices response={response} error={error} setType={setType} />
-          </Main.DFlex>
-        )}
+        <Main.DFlex>
+          <Main.Dialog response={response} error={error} type={type} />
+          <Main.Devices response={response} error={error} setType={setType} />
+        </Main.DFlex>
       </Main.Container>
     </Main>
   );

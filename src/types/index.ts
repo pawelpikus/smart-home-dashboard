@@ -63,16 +63,17 @@ type Response = {
 
 export interface IDialogRes {
   type: string;
-  response: Response;
+  response: Response | null;
   error: boolean;
 }
 
 export interface IMainDevices {
-  response: Response;
+  response: Response | null;
   setType: Dispatch<SetStateAction<string>>;
   error: boolean;
 }
 
 export interface IDevice {
-  response: Response;
+  response: Response | null;
+  color?: string;
 }
