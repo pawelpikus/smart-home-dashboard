@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { Main } from "../components";
-import { IDialogRes } from "../types";
 
 const ENDPOINT = "http://localhost:4001";
 
@@ -13,7 +12,7 @@ const MainContainer = () => {
     socket.on("connect", () => {
       console.log(socket.connected && "socket connected");
     });
-    socket.on("SmartBulb", (res) => {
+    socket.on("SmartDeviceDetails", (res) => {
       setResponse(res);
     });
   }, []);
@@ -25,7 +24,7 @@ const MainContainer = () => {
         <Main.Subtitle>Have a nice day</Main.Subtitle>
         <Main.DFlex>
           <Main.Dialog response={response} />
-          <Main.Devices />
+          <Main.Devices response={response} />
         </Main.DFlex>
       </Main.Container>
     </Main>

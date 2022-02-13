@@ -79,10 +79,42 @@ Main.Dialog = function MainDialog({ response, ...restProps }: Props) {
 
   const smartBulb = response && (
     <div className="flex flex-col gap-2 ">
-      <h3>{response.name}</h3>
-      <p>Connection state: {response.connectionState}</p>
-      <p>Status: {response.isTurnedOn ? `on` : `off`}</p>
-      <p>Color: {response.color}</p>
+      <h3 className="font-bold text-md">{response.SmartBulb.name}</h3>
+      <p>Connection state: {response.SmartBulb.connectionState}</p>
+      <p>Status: {response.SmartBulb.isTurnedOn ? `on` : `off`}</p>
+      <div>
+        Color:{" "}
+        <span className={` w-4 h-4 bg-[${response.SmartBulb.color}]`}></span>
+      </div>
+    </div>
+  );
+
+  const smartOutlet = response && (
+    <div className="flex flex-col gap-2 ">
+      <h3 className="font-bold text-md">{response.SmartOutlet.name}</h3>
+      <p>Connection state: {response.SmartOutlet.connectionState}</p>
+      <p>Status: {response.SmartOutlet.isTurnedOn ? `on` : `off`}</p>
+      <div>
+        Power Consumption:{" "}
+        <span className={` w-4 h-4 text-red`}>
+          {response.SmartOutlet.powerConsumption}
+        </span>
+      </div>
+    </div>
+  );
+
+  const smartTempSensor = response && (
+    <div className="flex flex-col gap-2 ">
+      <h3 className="font-bold text-md">
+        {response.SmartTemperatureSensor.name}
+      </h3>
+      <p>Connection state: {response.SmartTemperatureSensor.connectionState}</p>
+      <div>
+        Power Consumption:{" "}
+        <span className={` w-4 h-4 text-red`}>
+          {response.SmartTemperatureSensor.temperature} C
+        </span>
+      </div>
     </div>
   );
 
@@ -92,7 +124,7 @@ Main.Dialog = function MainDialog({ response, ...restProps }: Props) {
       {...restProps}
       className="p-10 my-4 text-left transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full "
     >
-      {response ? smartBulb : <div>Loading...</div>}
+      {response ? smartOutlet : <div>Loading...</div>}
     </div>
   );
 };
@@ -108,24 +140,28 @@ const cards = [
   },
 ];
 
-Main.Devices = function MainDevices({ ...restProps }: Props) {
+Main.Devices = function MainDevices({ response, ...restProps }: Props) {
   return (
     <div
       className="flex flex-wrap justify-between lg:flex-col lg:w-1/2 lg:items-center"
       {...restProps}
     >
-      {cards.map((card) => (
-        <Card key={card.name}>
-          <div className="flex items-start justify-between gap-2">
-            <Card.Icon type={card.type} />
-            <Card.Status status={card.status} />
-          </div>
-          <div className="flex items-start justify-between gap-2">
-            <Card.Title>{card.name}</Card.Title>
-            <Card.OnOff onOff={card.isTurnedOn} />
-          </div>
-        </Card>
-      ))}
+      {response ? (
+        Object.keys(response).map((key, index) => (
+          <Card key={index}>
+            <div className="flex items-start justify-between gap-2">
+              <Card.Icon type={response.key.type} />
+              <Card.Status status={response.key.status} />
+            </div>
+            <div className="flex items-start justify-between gap-2">
+              <Card.Title>{response.key.name}</Card.Title>
+              <Card.OnOff onOff={response.key.isTurnedOn} />
+            </div>
+          </Card>
+        ))
+      ) : (
+        <div>Loading...</div>
+      )}
       <Card>
         <Card.AddNew>Add new Device</Card.AddNew>
       </Card>
