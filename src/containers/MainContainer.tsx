@@ -6,6 +6,7 @@ const ENDPOINT = "http://localhost:4001";
 
 const MainContainer = () => {
   const [response, setResponse] = useState();
+  const [type, setType] = useState();
 
   useEffect(() => {
     const socket = io(ENDPOINT);
@@ -23,8 +24,8 @@ const MainContainer = () => {
         <Main.Title>Hello, Alicia</Main.Title>
         <Main.Subtitle>Have a nice day</Main.Subtitle>
         <Main.DFlex>
-          <Main.Dialog response={response} />
-          <Main.Devices response={response} />
+          <Main.Dialog response={response} type={type} />
+          <Main.Devices response={response} setType={setType} />
         </Main.DFlex>
       </Main.Container>
     </Main>

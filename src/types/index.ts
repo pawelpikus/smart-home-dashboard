@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 export interface Props
   extends ILogoProps,
@@ -25,10 +25,12 @@ export interface IButtonLink {
 
 export interface ICardStatus {
   status?: string;
+  onClick?: () => void | undefined;
+  setType?: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export interface ICardIcon {
-  type?: string;
+  type?: string | undefined;
 }
 
 export interface ICardOnOff {
@@ -38,7 +40,7 @@ export interface ICardOnOff {
 export interface IDialogRes {
   response?: {
     SmartBulb: {
-      type: "bulb";
+      type: "bulb" | undefined;
       id: string;
       name: string;
       connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
@@ -47,7 +49,7 @@ export interface IDialogRes {
       color: string; // in the CSS formats
     };
     SmartOutlet: {
-      type: "outlet";
+      type: "outlet" | undefined;
       id: string;
       name: string;
       connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
@@ -55,9 +57,10 @@ export interface IDialogRes {
       powerConsumption: number; // in watts
     };
     SmartTemperatureSensor: {
-      type: "temperatureSensor";
+      type: "temperatureSensor" | undefined;
       id: string;
       name: string;
+      isTurnedOn: boolean;
       connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
       temperature: number; // in Celsius
     };

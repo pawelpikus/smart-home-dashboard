@@ -1,8 +1,8 @@
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Props } from "../../types";
 import Card from "../Card";
 import interact from "interactjs";
-import { RiH3 } from "react-icons/ri";
+import Spinner from "../common/Spinner";
 
 const Main = ({ children, ...restProps }: Props) => {
   return (
@@ -21,7 +21,7 @@ Main.Container = function mainContainer({ children }: Props) {
 
 Main.DFlex = function mainDFlex({ children }: Props) {
   return (
-    <div className="flex flex-col items-center justify-between gap-4 lg:flex-row ">
+    <div className="flex flex-col items-center justify-between gap-4 lg:flex-row lg:justify-center ">
       {children}
     </div>
   );
@@ -49,7 +49,8 @@ Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
   );
 };
 
-Main.Dialog = function MainDialog({ response, ...restProps }: Props) {
+Main.Dialog = function MainDialog({ response, type }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
   const draggableRef = useRef<HTMLDivElement>(null);
 
   const position = { x: 0, y: 0 };
@@ -58,6 +59,10 @@ Main.Dialog = function MainDialog({ response, ...restProps }: Props) {
     restriction: "parent",
     endOnly: true,
   });
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, [type]);
 
   useLayoutEffect(() => {
     if (draggableRef.current) {
@@ -77,90 +82,122 @@ Main.Dialog = function MainDialog({ response, ...restProps }: Props) {
     }
   });
 
-  const smartBulb = response && (
+  let color = response?.SmartBulb.color;
+  const smartBulb = response && type === "bulb" && (
     <div className="flex flex-col gap-2 ">
       <h3 className="font-bold text-md">{response.SmartBulb.name}</h3>
-      <p>Connection state: {response.SmartBulb.connectionState}</p>
-      <p>Status: {response.SmartBulb.isTurnedOn ? `on` : `off`}</p>
+      <p>
+        Connection state:{" "}
+        <span className="text-accent">
+          {response.SmartBulb.connectionState}
+        </span>
+      </p>
+      <p>
+        Status:{" "}
+        <span className="text-accent">
+          {response.SmartBulb.isTurnedOn ? `on` : `off`}
+        </span>
+      </p>
       <div>
         Color:{" "}
-        <span className={` w-4 h-4 bg-[${response.SmartBulb.color}]`}></span>
+        <span
+          className={`bg-[${color}] w-8 h-4 align-middle rounded inline-block`}
+        ></span>
       </div>
     </div>
   );
 
-  const smartOutlet = response && (
+  const smartOutlet = response && type === "outlet" && (
     <div className="flex flex-col gap-2 ">
       <h3 className="font-bold text-md">{response.SmartOutlet.name}</h3>
       <p>Connection state: {response.SmartOutlet.connectionState}</p>
       <p>Status: {response.SmartOutlet.isTurnedOn ? `on` : `off`}</p>
       <div>
         Power Consumption:{" "}
-        <span className={` w-4 h-4 text-red`}>
-          {response.SmartOutlet.powerConsumption}
+        <span className="text-accent">
+          {response.SmartOutlet.powerConsumption} Watts
         </span>
       </div>
     </div>
   );
 
-  const smartTempSensor = response && (
+  const smartTempSensor = response && type === "temperatureSensor" && (
     <div className="flex flex-col gap-2 ">
       <h3 className="font-bold text-md">
         {response.SmartTemperatureSensor.name}
       </h3>
       <p>Connection state: {response.SmartTemperatureSensor.connectionState}</p>
       <div>
-        Power Consumption:{" "}
-        <span className={` w-4 h-4 text-red`}>
-          {response.SmartTemperatureSensor.temperature} C
+        Temperature:{" "}
+        <span className=" text-accent">
+          {response.SmartTemperatureSensor.temperature}&#xb0;C
         </span>
       </div>
     </div>
   );
 
-  return (
+  let smartDevice;
+  if (type === "outlet") {
+    smartDevice = smartOutlet;
+  } else if (type === "bulb") {
+    smartDevice = smartBulb;
+  } else if (type === "temperatureSensor") {
+    smartDevice = smartTempSensor;
+  }
+
+  return isOpen ? (
     <div
       ref={draggableRef}
-      {...restProps}
-      className="p-10 my-4 text-left transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full "
+      className="relative w-1/2 p-2 my-4 text-center transition-colors bg-white border-none shadow-sm select-none lg:text-left lg:p-6 touch-none rounded-2xl text-textBlue hover:bg-bgHover "
     >
-      {response ? smartOutlet : <div>Loading...</div>}
+      <button
+        type="button"
+        onClick={() => setIsOpen(false)}
+        className="absolute px-2 py-1 text-white rounded top-4 right-4 bg-bgDarker hover:bg-bgDark"
+      >
+        X
+      </button>
+      {response ? smartDevice : <Spinner />}
     </div>
-  );
+  ) : null;
 };
 
-const cards = [
-  { type: "bulb", name: "Bulb", status: "connected", isTurnedOn: true },
-  { type: "outlet", name: "Outlet", status: "disconnected", isTurnedOn: false },
-  {
-    type: "temperatureSensor",
-    name: "Temp Sensor",
-    status: "poorConnection",
-    isTurnedOn: true,
-  },
-];
+Main.Devices = function MainDevices({ response, setType }: Props) {
+  // `PropertyKey` is short for "string | number | symbol"
+  // since an object key can be any of those types, our key can too
+  // in TS 3.0+, putting just "string" raises an error
+  function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
+    return key in obj;
+  }
 
-Main.Devices = function MainDevices({ response, ...restProps }: Props) {
   return (
-    <div
-      className="flex flex-wrap justify-between lg:flex-col lg:w-1/2 lg:items-center"
-      {...restProps}
-    >
+    <div className="flex flex-wrap justify-between lg:flex-col lg:w-1/2 lg:items-center">
       {response ? (
-        Object.keys(response).map((key, index) => (
-          <Card key={index}>
-            <div className="flex items-start justify-between gap-2">
-              <Card.Icon type={response.key.type} />
-              <Card.Status status={response.key.status} />
-            </div>
-            <div className="flex items-start justify-between gap-2">
-              <Card.Title>{response.key.name}</Card.Title>
-              <Card.OnOff onOff={response.key.isTurnedOn} />
-            </div>
-          </Card>
-        ))
+        Object.keys(response).map((device) => {
+          if (hasKey(response, device)) {
+            return (
+              <Card
+                key={response[device].id}
+                type={response[device].type}
+                setType={setType}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <Card.Icon type={response[device].type} />
+                  <Card.Status status={response[device].connectionState} />
+                </div>
+                <div className="flex items-start justify-between gap-2">
+                  <Card.Title>{response[device].name}</Card.Title>
+                  <Card.OnOff onOff={response[device].isTurnedOn} />
+                </div>
+              </Card>
+            );
+          }
+          return null;
+        })
       ) : (
-        <div>Loading...</div>
+        <Card>
+          <Spinner />
+        </Card>
       )}
       <Card>
         <Card.AddNew>Add new Device</Card.AddNew>
