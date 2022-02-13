@@ -1,12 +1,9 @@
 import { Props } from "../../types";
 import { IoPersonCircle } from "react-icons/io5";
 
-const SideBar = ({ children, ...restProps }: Props) => {
+const SideBar = ({ children }: Props) => {
   return (
-    <div
-      className="lg:row-start-2 bg-bgDarker lg:mx-0 lg:col-start-3"
-      {...restProps}
-    >
+    <div className="lg:row-start-2 bg-bgDarker lg:mx-0 lg:col-start-3">
       {children}
     </div>
   );

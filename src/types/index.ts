@@ -1,68 +1,78 @@
 import React, { Dispatch, SetStateAction } from "react";
 
-export interface Props
-  extends ILogoProps,
-    INavItem,
-    IButtonLink,
-    ICardStatus,
-    ICardIcon,
-    ICardOnOff,
-    IDialogRes {
-  children?: React.ReactNode;
+export interface Props {
+  readonly children: React.ReactNode;
 }
 
-export interface ILogoProps {
-  src?: string;
+export interface ILogoProps extends Props {
+  src: string;
 }
 
-export interface INavItem {
-  data?: string;
+export interface INavItem extends Props {
+  data: string;
 }
 
-export interface IButtonLink {
-  href?: string;
+export interface IButtonLink extends Props {
+  href: string;
+}
+
+export interface ICardProps extends Props {
+  type?: string;
+  setType?: Dispatch<SetStateAction<string>>;
 }
 
 export interface ICardStatus {
-  status?: string;
-  onClick?: () => void | undefined;
-  setType?: Dispatch<SetStateAction<string | undefined>>;
+  status: string;
 }
 
 export interface ICardIcon {
-  type?: string | undefined;
+  type: string | undefined;
 }
 
 export interface ICardOnOff {
-  onOff?: boolean;
+  onOff: boolean;
 }
 
-export interface IDialogRes {
-  response?: {
-    SmartBulb: {
-      type: "bulb" | undefined;
-      id: string;
-      name: string;
-      connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
-      isTurnedOn: boolean;
-      brightness: number; // <0, 100>
-      color: string; // in the CSS formats
-    };
-    SmartOutlet: {
-      type: "outlet" | undefined;
-      id: string;
-      name: string;
-      connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
-      isTurnedOn: boolean;
-      powerConsumption: number; // in watts
-    };
-    SmartTemperatureSensor: {
-      type: "temperatureSensor" | undefined;
-      id: string;
-      name: string;
-      isTurnedOn: boolean;
-      connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
-      temperature: number; // in Celsius
-    };
+type Response = {
+  SmartBulb: {
+    type: "bulb";
+    id: string;
+    name: string;
+    connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
+    isTurnedOn: boolean;
+    brightness: number; // <0, 100>
+    color: string; // in the CSS formats
   };
+  SmartOutlet: {
+    type: "outlet";
+    id: string;
+    name: string;
+    connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
+    isTurnedOn: boolean;
+    powerConsumption: number; // in watts
+  };
+  SmartTemperatureSensor: {
+    type: "temperatureSensor";
+    id: string;
+    name: string;
+    isTurnedOn: boolean;
+    connectionState: string; // 'connected', 'disconnected' or 'poorConnection'
+    temperature: number; // in Celsius
+  };
+};
+
+export interface IDialogRes {
+  type: string;
+  response: Response;
+  error: boolean;
+}
+
+export interface IMainDevices {
+  response: Response;
+  setType: Dispatch<SetStateAction<string>>;
+  error: boolean;
+}
+
+export interface IDevice {
+  response: Response;
 }

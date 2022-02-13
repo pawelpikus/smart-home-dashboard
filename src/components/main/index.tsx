@@ -1,15 +1,15 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Props } from "../../types";
+import { IDialogRes, IMainDevices, Props } from "../../types";
 import Card from "../Card";
 import interact from "interactjs";
 import Spinner from "../common/Spinner";
+import SmartBulb from "../devices/SmartBulb";
+import SmartOutlet from "../devices/SmartOutlet";
+import SmartTempSensor from "../devices/SmartTempSensor";
 
-const Main = ({ children, ...restProps }: Props) => {
+const Main = ({ children }: Props) => {
   return (
-    <div
-      className="min-w-full lg:row-start-2 lg:justify-start lg:flex lg:flex-col lg:col-start-2 lg:text-xl lg:h-screen lg:min-w-min lg:mx-4 lg:mt-4"
-      {...restProps}
-    >
+    <div className="min-w-full lg:row-start-2 lg:justify-start lg:flex lg:flex-col lg:col-start-2 lg:text-xl lg:h-screen lg:min-w-min lg:mx-4 lg:mt-4">
       {children}
     </div>
   );
@@ -27,29 +27,23 @@ Main.DFlex = function mainDFlex({ children }: Props) {
   );
 };
 
-Main.Title = function MainTitle({ children, ...restProps }: Props) {
+Main.Title = function MainTitle({ children }: Props) {
   return (
-    <h1
-      className="mt-5 text-2xl font-bold text-center text-black lg:text-4xl lg:text-left "
-      {...restProps}
-    >
+    <h1 className="mt-5 text-2xl font-bold text-center text-black lg:text-4xl lg:text-left ">
       {children}
     </h1>
   );
 };
 
-Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
+Main.Subtitle = function MainSubTitle({ children }: Props) {
   return (
-    <p
-      {...restProps}
-      className="mb-5 text-sm text-center text-black lg:mb-8 opacity-70 lg:text-xl lg:text-left "
-    >
+    <p className="mb-5 text-sm text-center text-black lg:mb-8 opacity-70 lg:text-xl lg:text-left ">
       {children}
     </p>
   );
 };
 
-Main.Dialog = function MainDialog({ response, type }: Props) {
+Main.Dialog = function MainDialog({ response, type }: IDialogRes) {
   const [isOpen, setIsOpen] = useState(false);
   const draggableRef = useRef<HTMLDivElement>(null);
 
@@ -82,67 +76,13 @@ Main.Dialog = function MainDialog({ response, type }: Props) {
     }
   });
 
-  let color = response?.SmartBulb.color;
-  const smartBulb = response && type === "bulb" && (
-    <div className="flex flex-col gap-2 ">
-      <h3 className="font-bold text-md">{response.SmartBulb.name}</h3>
-      <p>
-        Connection state:{" "}
-        <span className="text-accent">
-          {response.SmartBulb.connectionState}
-        </span>
-      </p>
-      <p>
-        Status:{" "}
-        <span className="text-accent">
-          {response.SmartBulb.isTurnedOn ? `on` : `off`}
-        </span>
-      </p>
-      <div>
-        Color:{" "}
-        <span
-          className={`bg-[${color}] w-8 h-4 align-middle rounded inline-block`}
-        ></span>
-      </div>
-    </div>
-  );
-
-  const smartOutlet = response && type === "outlet" && (
-    <div className="flex flex-col gap-2 ">
-      <h3 className="font-bold text-md">{response.SmartOutlet.name}</h3>
-      <p>Connection state: {response.SmartOutlet.connectionState}</p>
-      <p>Status: {response.SmartOutlet.isTurnedOn ? `on` : `off`}</p>
-      <div>
-        Power Consumption:{" "}
-        <span className="text-accent">
-          {response.SmartOutlet.powerConsumption} Watts
-        </span>
-      </div>
-    </div>
-  );
-
-  const smartTempSensor = response && type === "temperatureSensor" && (
-    <div className="flex flex-col gap-2 ">
-      <h3 className="font-bold text-md">
-        {response.SmartTemperatureSensor.name}
-      </h3>
-      <p>Connection state: {response.SmartTemperatureSensor.connectionState}</p>
-      <div>
-        Temperature:{" "}
-        <span className=" text-accent">
-          {response.SmartTemperatureSensor.temperature}&#xb0;C
-        </span>
-      </div>
-    </div>
-  );
-
   let smartDevice;
   if (type === "outlet") {
-    smartDevice = smartOutlet;
+    smartDevice = <SmartOutlet response={response} />;
   } else if (type === "bulb") {
-    smartDevice = smartBulb;
+    smartDevice = <SmartBulb response={response} />;
   } else if (type === "temperatureSensor") {
-    smartDevice = smartTempSensor;
+    smartDevice = <SmartTempSensor response={response} />;
   }
 
   return isOpen ? (
@@ -162,7 +102,7 @@ Main.Dialog = function MainDialog({ response, type }: Props) {
   ) : null;
 };
 
-Main.Devices = function MainDevices({ response, setType }: Props) {
+Main.Devices = function MainDevices({ response, setType }: IMainDevices) {
   // `PropertyKey` is short for "string | number | symbol"
   // since an object key can be any of those types, our key can too
   // in TS 3.0+, putting just "string" raises an error

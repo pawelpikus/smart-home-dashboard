@@ -1,6 +1,6 @@
-import { Props } from "../../types";
+import { IButtonLink } from "../../types";
 
-const ButtonLink = ({ children, href }: Props) => {
+const ButtonLink = ({ children, href }: IButtonLink) => {
   return (
     <a
       href={href}

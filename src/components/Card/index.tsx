@@ -1,11 +1,17 @@
-import { Props } from "../../types";
+import {
+  ICardIcon,
+  ICardOnOff,
+  ICardProps,
+  ICardStatus,
+  Props,
+} from "../../types";
 import { IoMdAddCircle } from "react-icons/io";
 import { CgBulb } from "react-icons/cg";
 import { MdWifi, MdWifiOff, MdSignalWifi0Bar } from "react-icons/md";
 import { BsOutlet } from "react-icons/bs";
 import { FaTemperatureHigh } from "react-icons/fa";
 
-const Card = ({ children, type, setType }: Props) => {
+const Card = ({ children, type, setType }: ICardProps) => {
   return (
     <div
       onClick={() => setType && type && setType(type)}
@@ -16,7 +22,7 @@ const Card = ({ children, type, setType }: Props) => {
   );
 };
 
-Card.Icon = function CardIcon({ type }: Props) {
+Card.Icon = function CardIcon({ type }: ICardIcon) {
   let icon = null;
   switch (type) {
     case "bulb":
@@ -39,15 +45,11 @@ Card.Icon = function CardIcon({ type }: Props) {
   );
 };
 
-Card.Title = function CardTitle({ children, ...restProps }: Props) {
-  return (
-    <h3 className="font-bold text-md" {...restProps}>
-      {children}
-    </h3>
-  );
+Card.Title = function CardTitle({ children }: Props) {
+  return <h3 className="font-bold text-md">{children}</h3>;
 };
 
-Card.Status = function CardStatus({ status }: Props) {
+Card.Status = function CardStatus({ status }: ICardStatus) {
   let icon = null;
 
   switch (status) {
@@ -69,7 +71,7 @@ Card.Status = function CardStatus({ status }: Props) {
   );
 };
 
-Card.OnOff = function CardOnOff({ onOff }: Props) {
+Card.OnOff = function CardOnOff({ onOff }: ICardOnOff) {
   return (
     <div
       className={` group-hover:text-white text-textBlue font-bold ${
