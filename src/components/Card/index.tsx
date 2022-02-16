@@ -1,19 +1,32 @@
-import { Props } from "../../types";
+import {
+  ICardIcon,
+  ICardOnOff,
+  ICardProps,
+  ICardStatus,
+  Props,
+} from "../../types";
 import { IoMdAddCircle } from "react-icons/io";
 import { CgBulb } from "react-icons/cg";
 import { MdWifi, MdWifiOff, MdSignalWifi0Bar } from "react-icons/md";
 import { BsOutlet } from "react-icons/bs";
 import { FaTemperatureHigh } from "react-icons/fa";
 
-const Card = ({ children }: Props) => {
+const Card = ({ children, type, setType, setShow }: ICardProps) => {
+  const handleClick = () => {
+    if (setType && type) setType(type);
+    if (setShow) setShow(true);
+  };
   return (
-    <div className="group mb-4 flex flex-col justify-center w-[46%] p-4 lg:p-8 cursor-pointer transition-colors bg-white border-none shadow-sm rounded-2xl text-black hover:bg-accent hover:text-white lg:w-full lg:items-stretch">
+    <div
+      onClick={handleClick}
+      className="group mb-4 flex flex-col justify-center w-[46%] p-4 lg:p-8 cursor-pointer transition-colors bg-white border-none shadow-sm rounded-2xl text-black hover:bg-accent hover:text-white lg:w-full lg:items-stretch"
+    >
       {children}
     </div>
   );
 };
 
-Card.Icon = function CardIcon({ type }: Props) {
+Card.Icon = function CardIcon({ type }: ICardIcon) {
   let icon = null;
   switch (type) {
     case "bulb":
@@ -36,15 +49,11 @@ Card.Icon = function CardIcon({ type }: Props) {
   );
 };
 
-Card.Title = function CardTitle({ children, ...restProps }: Props) {
-  return (
-    <h3 className="font-bold text-md" {...restProps}>
-      {children}
-    </h3>
-  );
+Card.Title = function CardTitle({ children }: Props) {
+  return <h3 className="font-bold text-md">{children}</h3>;
 };
 
-Card.Status = function CardStatus({ status }: Props) {
+Card.Status = function CardStatus({ status }: ICardStatus) {
   let icon = null;
 
   switch (status) {
@@ -66,7 +75,7 @@ Card.Status = function CardStatus({ status }: Props) {
   );
 };
 
-Card.OnOff = function CardOnOff({ onOff }: Props) {
+Card.OnOff = function CardOnOff({ onOff }: ICardOnOff) {
   return (
     <div
       className={` group-hover:text-white text-textBlue font-bold ${

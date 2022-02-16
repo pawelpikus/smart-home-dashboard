@@ -1,14 +1,15 @@
-import { useLayoutEffect, useRef } from "react";
-import { Props } from "../../types";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { IDialogRes, IMainDevices, Props } from "../../types";
 import Card from "../Card";
 import interact from "interactjs";
+import Spinner from "../common/Spinner";
+import SmartBulb from "../devices/SmartBulb";
+import SmartOutlet from "../devices/SmartOutlet";
+import SmartTempSensor from "../devices/SmartTempSensor";
 
-const Main = ({ children, ...restProps }: Props) => {
+const Main = ({ children }: Props) => {
   return (
-    <div
-      className="min-w-full lg:row-start-2 lg:justify-start lg:flex lg:flex-col lg:col-start-2 lg:text-xl lg:h-screen lg:min-w-min lg:mx-4 lg:mt-4"
-      {...restProps}
-    >
+    <div className="min-w-full lg:row-start-2 lg:justify-start lg:flex lg:flex-col lg:col-start-2 lg:text-xl lg:h-screen lg:min-w-min lg:mx-4 lg:mt-4">
       {children}
     </div>
   );
@@ -20,102 +21,142 @@ Main.Container = function mainContainer({ children }: Props) {
 
 Main.DFlex = function mainDFlex({ children }: Props) {
   return (
-    <div className="flex flex-col items-center justify-between gap-4 lg:flex-row ">
+    <div className="flex flex-col items-center justify-between gap-4 lg:flex-row lg:justify-center ">
       {children}
     </div>
   );
 };
 
-Main.Title = function MainTitle({ children, ...restProps }: Props) {
+Main.Title = function MainTitle({ children }: Props) {
   return (
-    <h1
-      className="mt-5 text-2xl font-bold text-center text-black lg:text-4xl lg:text-left "
-      {...restProps}
-    >
+    <h1 className="mt-5 text-2xl font-bold text-center text-black lg:text-4xl lg:text-left ">
       {children}
     </h1>
   );
 };
 
-Main.Subtitle = function MainSubTitle({ children, ...restProps }: Props) {
+Main.Subtitle = function MainSubTitle({ children }: Props) {
   return (
-    <p
-      {...restProps}
-      className="mb-5 text-sm text-center text-black lg:mb-8 opacity-70 lg:text-xl lg:text-left "
-    >
+    <p className="mb-5 text-sm text-center text-black lg:mb-8 opacity-70 lg:text-xl lg:text-left ">
       {children}
     </p>
   );
 };
 
-Main.Dialog = function MainDialog({ ...restProps }) {
+Main.Dialog = function MainDialog({
+  response,
+  type,
+  show,
+  setShow,
+}: IDialogRes) {
+  const [isLoading, setIsLoading] = useState(true);
   const draggableRef = useRef<HTMLDivElement>(null);
 
-  const position = { x: 0, y: 0 };
-  // create a restrict modifier to prevent dragging an element out of its parent
-  const restrictToParent = interact.modifiers.restrictRect({
-    restriction: "parent",
-    endOnly: true,
-  });
+  useEffect(() => {
+    if (response) {
+      setIsLoading(false);
+    }
+  }, [response]);
 
+  const position = { x: 0, y: 0 };
   useLayoutEffect(() => {
     if (draggableRef.current) {
-      interact(draggableRef.current).draggable({
+      const interactable = interact(draggableRef.current);
+      interactable.draggable({
         inertia: true,
-        // apply the restrict and then the snap modifiers to drag events
-        modifiers: [restrictToParent],
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: "parent",
+            endOnly: true,
+          }),
+        ],
         listeners: {
           move(event) {
             position.x += event.dx;
             position.y += event.dy;
-
-            event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+            event.target.style.webkitTransform = event.target.style.transform =
+              "translate(" + position.x + "px, " + position.y + "px)";
           },
         },
       });
     }
   });
 
-  return (
+  let smartDevice;
+  switch (type) {
+    case "outlet":
+      smartDevice = <SmartOutlet response={response} />;
+      break;
+    case "bulb":
+      smartDevice = <SmartBulb response={response} />;
+      break;
+    case "temperatureSensor":
+      smartDevice = <SmartTempSensor response={response} />;
+      break;
+    default:
+      smartDevice = null;
+      break;
+  }
+
+  return show ? (
     <div
       ref={draggableRef}
-      {...restProps}
-      className="p-10 my-4 text-center transition-colors bg-white border-none shadow-sm select-none touch-none rounded-2xl text-textBlue hover:bg-bgHover lg:w-full "
+      className={`relative z-50 w-1/2 p-2 my-4 text-center transition-colors bg-white border-none shadow-sm select-none lg:text-left lg:p-6 touch-none rounded-2xl text-textBlue hover:bg-bgHover`}
     >
-      Main dialog window
+      <button
+        type="button"
+        onClick={() => setShow(false)}
+        className="absolute px-2 py-1 text-sm text-white rounded top-2 right-2 lg:top-4 lg:right-4 bg-bgDarker hover:bg-bgDark"
+      >
+        X
+      </button>
+      {isLoading ? <Spinner /> : smartDevice}
     </div>
-  );
+  ) : null;
 };
 
-const cards = [
-  { type: "bulb", name: "Bulb", status: "connected", isTurnedOn: true },
-  { type: "outlet", name: "Outlet", status: "disconnected", isTurnedOn: false },
-  {
-    type: "temperatureSensor",
-    name: "Temp Sensor",
-    status: "poorConnection",
-    isTurnedOn: true,
-  },
-];
+Main.Devices = function MainDevices({
+  response,
+  setType,
+  setShow,
+}: IMainDevices) {
+  // `PropertyKey` is short for "string | number | symbol"
+  // since an object key can be any of those types, our key can too
+  // in TS 3.0+, putting just "string" raises an error
+  function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
+    return key in obj;
+  }
 
-Main.Devices = function MainDevices({ ...restProps }: Props) {
   return (
-    <div
-      className="flex flex-wrap justify-between lg:flex-col lg:w-1/2 lg:items-center"
-      {...restProps}
-    >
-      {cards.map((card) => (
-        <Card key={card.name}>
-          <div className="flex items-start justify-between gap-2">
-            <Card.Icon type={card.type} />
-            <Card.Status status={card.status} />
-          </div>
-          <div className="flex items-start justify-between gap-2">
-            <Card.Title>{card.name}</Card.Title>
-            <Card.OnOff onOff={card.isTurnedOn} />
-          </div>
+    <div className="flex flex-wrap justify-between lg:flex-col lg:w-1/2 lg:items-center">
+      {response ? (
+        Object.keys(response).map((device) => {
+          if (hasKey(response, device)) {
+            return (
+              <Card
+                key={response[device].id}
+                type={response[device].type}
+                setType={setType}
+                setShow={setShow}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <Card.Icon type={response[device].type} />
+                  <Card.Status status={response[device].connectionState} />
+                </div>
+                <div className="flex items-start justify-between gap-2">
+                  <Card.Title>{response[device].name}</Card.Title>
+                  <Card.OnOff onOff={response[device].isTurnedOn} />
+                </div>
+              </Card>
+            );
+          }
+          return null;
+        })
+      ) : (
+        <Card>
+          <Spinner />
         </Card>
-      ))}
+      )}
       <Card>
         <Card.AddNew>Add new Device</Card.AddNew>
       </Card>

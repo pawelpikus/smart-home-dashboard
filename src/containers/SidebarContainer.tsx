@@ -1,8 +1,6 @@
-import React from "react";
 import { SideBar } from "../components";
-import { Props } from "../types";
 
-const SidebarContainer: React.FC<Props> = () => {
+const SidebarContainer = () => {
   return (
     <SideBar>
       <SideBar.Container>

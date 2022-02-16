@@ -2,12 +2,9 @@ import { BsFilePerson } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
 import { Props } from "../../types";
 
-const Avatar = ({ children, ...restProps }: Props) => {
+const Avatar = ({ children }: Props) => {
   return (
-    <div
-      {...restProps}
-      className="row-start-1 gap-1 mx-auto text-white bg-bgDark lg:w-full lg:col-span-full "
-    >
+    <div className="row-start-1 gap-1 mx-auto text-white bg-bgDark lg:w-full lg:col-span-full ">
       {children}
     </div>
   );
