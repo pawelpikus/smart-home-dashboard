@@ -8,14 +8,15 @@ const MainContainer = () => {
   const [response, setResponse] = useState(null);
   const [type, setType] = useState("bulb");
   const [error, setError] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("connect", () => {
       console.log(socket.connected && "socket connected");
     });
-    socket.on("SmartDeviceDetails", (res) => {
-      setResponse(res);
+    socket.on("refresh", (SmartDeviceDetails) => {
+      setResponse(SmartDeviceDetails);
     });
     socket.on("connect_error", () => {
       setError(true);
@@ -35,8 +36,19 @@ const MainContainer = () => {
         <Main.Title>Hello, Alicia</Main.Title>
         <Main.Subtitle>Have a nice day</Main.Subtitle>
         <Main.DFlex>
-          <Main.Dialog response={response} error={error} type={type} />
-          <Main.Devices response={response} error={error} setType={setType} />
+          <Main.Dialog
+            response={response}
+            setShow={setShow}
+            show={show}
+            error={error}
+            type={type}
+          />
+          <Main.Devices
+            response={response}
+            error={error}
+            setShow={setShow}
+            setType={setType}
+          />
         </Main.DFlex>
       </Main.Container>
     </Main>

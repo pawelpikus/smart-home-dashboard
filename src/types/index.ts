@@ -18,6 +18,7 @@ export interface IButtonLink extends Props {
 
 export interface ICardProps extends Props {
   type?: string;
+  setShow?: Dispatch<SetStateAction<boolean>>;
   setType?: Dispatch<SetStateAction<string>>;
 }
 
@@ -63,6 +64,8 @@ type Response = {
 
 export interface IDialogRes {
   type: string;
+  show: boolean;
+  setShow: Dispatch<SetStateAction<boolean>>;
   response: Response | null;
   error: boolean;
 }
@@ -70,6 +73,7 @@ export interface IDialogRes {
 export interface IMainDevices {
   response: Response | null;
   setType: Dispatch<SetStateAction<string>>;
+  setShow: Dispatch<SetStateAction<boolean>>;
   error: boolean;
 }
 

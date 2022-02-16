@@ -11,10 +11,14 @@ import { MdWifi, MdWifiOff, MdSignalWifi0Bar } from "react-icons/md";
 import { BsOutlet } from "react-icons/bs";
 import { FaTemperatureHigh } from "react-icons/fa";
 
-const Card = ({ children, type, setType }: ICardProps) => {
+const Card = ({ children, type, setType, setShow }: ICardProps) => {
+  const handleClick = () => {
+    if (setType && type) setType(type);
+    if (setShow) setShow(true);
+  };
   return (
     <div
-      onClick={() => setType && type && setType(type)}
+      onClick={handleClick}
       className="group mb-4 flex flex-col justify-center w-[46%] p-4 lg:p-8 cursor-pointer transition-colors bg-white border-none shadow-sm rounded-2xl text-black hover:bg-accent hover:text-white lg:w-full lg:items-stretch"
     >
       {children}

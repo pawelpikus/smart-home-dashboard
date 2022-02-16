@@ -1,4 +1,3 @@
-import React from "react";
 import { Header } from "../components";
 import { AiFillHome } from "react-icons/ai";
 import { RiDashboardFill } from "react-icons/ri";

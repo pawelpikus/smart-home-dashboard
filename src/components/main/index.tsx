@@ -43,37 +43,39 @@ Main.Subtitle = function MainSubTitle({ children }: Props) {
   );
 };
 
-Main.Dialog = function MainDialog({ response, type }: IDialogRes) {
-  const [isOpen, setIsOpen] = useState(false);
+Main.Dialog = function MainDialog({
+  response,
+  type,
+  show,
+  setShow,
+}: IDialogRes) {
   const [isLoading, setIsLoading] = useState(true);
   const draggableRef = useRef<HTMLDivElement>(null);
-
-  const position = { x: 0, y: 0 };
-  // create a restrict modifier to prevent dragging an element out of its parent
-  const restrictToParent = interact.modifiers.restrictRect({
-    restriction: "parent",
-    endOnly: true,
-  });
 
   useEffect(() => {
     if (response) {
       setIsLoading(false);
     }
-    setIsOpen(true);
-  }, [type, response]);
+  }, [response]);
 
+  const position = { x: 0, y: 0 };
   useLayoutEffect(() => {
     if (draggableRef.current) {
-      interact(draggableRef.current).draggable({
+      const interactable = interact(draggableRef.current);
+      interactable.draggable({
         inertia: true,
-        // apply the restrict and then the snap modifiers to drag events
-        modifiers: [restrictToParent],
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: "parent",
+            endOnly: true,
+          }),
+        ],
         listeners: {
           move(event) {
             position.x += event.dx;
             position.y += event.dy;
-
-            event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+            event.target.style.webkitTransform = event.target.style.transform =
+              "translate(" + position.x + "px, " + position.y + "px)";
           },
         },
       });
@@ -81,22 +83,29 @@ Main.Dialog = function MainDialog({ response, type }: IDialogRes) {
   });
 
   let smartDevice;
-  if (type === "outlet") {
-    smartDevice = <SmartOutlet response={response} />;
-  } else if (type === "bulb") {
-    smartDevice = <SmartBulb response={response} />;
-  } else if (type === "temperatureSensor") {
-    smartDevice = <SmartTempSensor response={response} />;
+  switch (type) {
+    case "outlet":
+      smartDevice = <SmartOutlet response={response} />;
+      break;
+    case "bulb":
+      smartDevice = <SmartBulb response={response} />;
+      break;
+    case "temperatureSensor":
+      smartDevice = <SmartTempSensor response={response} />;
+      break;
+    default:
+      smartDevice = null;
+      break;
   }
 
-  return isOpen ? (
+  return show ? (
     <div
       ref={draggableRef}
-      className="relative w-1/2 p-2 my-4 text-center transition-colors bg-white border-none shadow-sm select-none lg:text-left lg:p-6 touch-none rounded-2xl text-textBlue hover:bg-bgHover "
+      className={`relative z-50 w-1/2 p-2 my-4 text-center transition-colors bg-white border-none shadow-sm select-none lg:text-left lg:p-6 touch-none rounded-2xl text-textBlue hover:bg-bgHover`}
     >
       <button
         type="button"
-        onClick={() => setIsOpen(false)}
+        onClick={() => setShow(false)}
         className="absolute px-2 py-1 text-sm text-white rounded top-2 right-2 lg:top-4 lg:right-4 bg-bgDarker hover:bg-bgDark"
       >
         X
@@ -106,7 +115,11 @@ Main.Dialog = function MainDialog({ response, type }: IDialogRes) {
   ) : null;
 };
 
-Main.Devices = function MainDevices({ response, setType }: IMainDevices) {
+Main.Devices = function MainDevices({
+  response,
+  setType,
+  setShow,
+}: IMainDevices) {
   // `PropertyKey` is short for "string | number | symbol"
   // since an object key can be any of those types, our key can too
   // in TS 3.0+, putting just "string" raises an error
@@ -124,6 +137,7 @@ Main.Devices = function MainDevices({ response, setType }: IMainDevices) {
                 key={response[device].id}
                 type={response[device].type}
                 setType={setType}
+                setShow={setShow}
               >
                 <div className="flex items-start justify-between gap-2">
                   <Card.Icon type={response[device].type} />
