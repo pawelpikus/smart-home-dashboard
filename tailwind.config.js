@@ -12,6 +12,7 @@ module.exports = {
       accent: "#d4573c",
       accentLight: "#f5c0b5",
       textBlue: "#7398ad",
+      error: "red",
     },
     fontFamily: {
       sans: ["Nunito", "sans-serif"],

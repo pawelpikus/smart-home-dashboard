@@ -67,7 +67,6 @@ export interface IDialogRes {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   response: Response | null;
-  error: boolean;
 }
 
 export interface IMainDevices {

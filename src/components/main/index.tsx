@@ -6,6 +6,7 @@ import Spinner from "../common/Spinner";
 import SmartBulb from "../devices/SmartBulb";
 import SmartOutlet from "../devices/SmartOutlet";
 import SmartTempSensor from "../devices/SmartTempSensor";
+import ErrorAlert from "../common/ErrorAlert";
 
 const Main = ({ children }: Props) => {
   return (
@@ -119,6 +120,7 @@ Main.Devices = function MainDevices({
   response,
   setType,
   setShow,
+  error,
 }: IMainDevices) {
   // `PropertyKey` is short for "string | number | symbol"
   // since an object key can be any of those types, our key can too
@@ -127,7 +129,9 @@ Main.Devices = function MainDevices({
     return key in obj;
   }
 
-  return (
+  return error ? (
+    <ErrorAlert />
+  ) : (
     <div className="flex flex-wrap justify-between lg:flex-col lg:w-1/2 lg:items-center">
       {response ? (
         Object.keys(response).map((device) => {

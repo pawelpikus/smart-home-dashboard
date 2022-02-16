@@ -50,7 +50,6 @@ const MainContainer = () => {
             response={response}
             setShow={setShow}
             show={show}
-            error={error}
             type={type}
           />
           <Main.Devices
