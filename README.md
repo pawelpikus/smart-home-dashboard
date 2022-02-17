@@ -222,4 +222,4 @@ LinkedIn - [/in/pawel-pikus](https://www.linkedin.com/in/pawel-pikus/)
 ## 👏 Thanks / Special thanks / Credits
 
 Thanks to [dribbble.com](https://dribbble.com/) for inspiration on UI design.
-Thanks to my [Mentor - devmentor.pl](https://devmentor.pl/) - for a cool Readme.md template.
+Thanks to [devmentor.pl](https://devmentor.pl/) - for a cool Readme.md template.
