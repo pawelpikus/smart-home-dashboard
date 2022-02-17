@@ -16,6 +16,10 @@ const SmartBulb = ({ response }: IDevice) => {
           {response?.SmartBulb.isTurnedOn ? `on` : `off`}
         </span>
       </p>
+      <p>
+        Brightness:{" "}
+        <span className="text-accent">{response?.SmartBulb.brightness}%</span>
+      </p>
       <div>
         Color:{" "}
         <span
