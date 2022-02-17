@@ -17,7 +17,7 @@ Header.Nav = function HeaderNav({ children }: Props) {
 };
 
 Header.NavItem = function HeaderNavItem({ children }: Props) {
-  return <li className="">{children}</li>;
+  return <li>{children}</li>;
 };
 
 export default Header;
