@@ -2,7 +2,7 @@
 
 # Smart Home Dashboard solution
 
-See the live version of [Smart Home Dashboard](https://smart-home-dashboard.vercel.app/).
+See the live version of [Smart Home Dashboard](https://smart-home-dashboard.vercel.app/). The client is deployed to [Vercel](https://vercel.com/), test server lives on [Heroku](https://id.heroku.com).
 
 The project is a sample of a smart home web app interface. It comprises of a mockup UI and an interactive part being a list of three smart devices with information about their state.
 
@@ -130,6 +130,14 @@ useLayoutEffect(() => {
 - a pretty useful workaround for the case when Typescript throws an error if you try to use property accessor as index using bracket notation:
 
 ```js
+
+// `PropertyKey` is short for "string | number | symbol"
+  // since an object key can be any of those types, our key can too
+  // in TS 3.0+, putting just "string" raises an error
+  function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
+    return key in obj;
+  }
+
 <Card
     key={response[device].id}
     type={response[device].type}
